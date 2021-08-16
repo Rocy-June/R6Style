@@ -4,12 +4,14 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
-Vue.config.productionTip = false
+import IconFont from './components/IconFont/IconFont';
+
+Vue.component('icon-font', IconFont);
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
-  components: { App },
+  components: { App, IconFont },
   template: '<App/>'
 })
