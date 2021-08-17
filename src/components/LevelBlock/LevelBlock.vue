@@ -4,7 +4,7 @@
       {{ level }}
     </div>
     <div class="progress-content">
-      <progress-bar :min="0" :max="100" :value="progressBarValue" />
+      <progress-bar :min="progressBarMin" :max="progressBarMax" :value="progressBarValue" />
     </div>
   </div>
 </template>
@@ -23,6 +23,14 @@ export default {
     showProgressBar: {
       type: Boolean,
       default: true,
+    },
+    progressBarMin: {
+      type: Number,
+      default: 0,
+    },
+    progressBarMax: {
+      type: Number,
+      default: 100,
     },
     progressBarValue: {
       type: Number,
