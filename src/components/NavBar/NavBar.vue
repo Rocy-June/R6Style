@@ -110,10 +110,12 @@ export default {
         }
       }
     }
-  }
 
-  .nav-right {
-    display: flex;
+    .nav-right {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   }
 }
 </style>

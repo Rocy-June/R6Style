@@ -1,5 +1,8 @@
 <template>
-  <i :class="{ iconfont: true, [type]: true }"></i>
+  <i
+    :class="{ iconfont: true, [type]: true }"
+    :style="{ 'font-size': typeof size === 'string' ? size : size + 'px' }"
+  ></i>
 </template>
 
 <script>
@@ -9,6 +12,10 @@ export default {
     type: {
       type: String,
       default: "",
+    },
+    size: {
+      type: [Number, String],
+      default: 14,
     },
   },
 };

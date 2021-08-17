@@ -9,19 +9,24 @@
         <icon-font type="icon-plus"></icon-font>
       </div>
       <div class="user-icon-box" v-for="(item, index) in list" :key="4 - index">
-        user-{{ index }}
+        <user-image :src="item[img]" />
       </div>
-      <div class="user-icon-box user-self">user-self</div>
-      <div class="user-ranking">ranking-img</div>
+      <div class="user-icon-box user-self">
+        <user-image :src="user[img]" />
+      </div>
+      <div class="user-icon-box user-ranking">
+        <img :src="getRankImage(user[rank])" />
+      </div>
     </div>
   </lighting-box>
 </template>
 
 <script>
-import LightingBox from "@/components/LightingBox/LightingBox.vue";
+import LightingBox from "@/components/LightingBox/LightingBox";
+import UserImage from "@/components/UserImage/UserImage";
 
 export default {
-  components: { LightingBox },
+  components: { LightingBox, UserImage },
   props: {
     user: {
       type: Object,
@@ -46,6 +51,29 @@ export default {
       type: String,
       default: "img",
     },
+    rank: {
+      type: String,
+      default: "rank",
+    },
+    level: {
+      type: String,
+      default: "level",
+    },
+  },
+  methods: {
+    // This icon data is from R6Tracker. (https://r6.tracker.network/)
+    getRankImage(rank) {
+      if (typeof rank === "number") {
+        if (rank < 0 || (rank > 20 && rank != 23)) {
+          rank = 0;
+        }
+        if (rank >= 0 && rank <= 20) {
+          return `https://trackercdn.com/cdn/r6.tracker.network/ranks/svg/hd-rank${rank}.svg`;
+        } else {
+          return "https://trackercdn.com/cdn/r6.tracker.network/ranks/svg/s15/hd-rank23.svg";
+        }
+      }
+    },
   },
 };
 </script>
@@ -60,8 +88,11 @@ export default {
     .user-icon-box {
       width: 45px;
       height: 45px;
-      margin-right: 10px;
       overflow: hidden;
+
+      &:not(:last-child) {
+        margin-right: 10px;
+      }
 
       &.user-none {
         width: 41px;
@@ -76,6 +107,12 @@ export default {
       &.user-self {
         border-left: 1px solid #ccc;
         padding-left: 10px;
+      }
+    }
+
+    .user-ranking {
+      img {
+        max-width: 100%;
       }
     }
   }
