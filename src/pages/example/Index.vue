@@ -8,6 +8,7 @@
     <!-- 'current' decides which tab will high-light, default is 0 -->
     <!-- 'width' is the width of module, it could be 'String' and 'Number'(px), default is 1100(px) -->
     <nav-bar
+      class="nav-bar"
       :list="navList"
       name="name"
       url="url"
@@ -63,6 +64,47 @@
         </lighting-box>
       </div>
     </nav-bar>
+    <div class="action-bar">
+      <div class="classic-actions">
+        <div class="action-line">
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+        </div>
+        <div class="action-line">
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+        </div>
+        <div class="action-line">
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+        </div>
+        <div class="action-line">
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+        </div>
+        <div class="action-line">
+          <div class="action-box">
+            <lighting-box></lighting-box>
+          </div>
+        </div>
+      </div>
+      <div class="event-actions">
+        <lighting-box></lighting-box>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -97,33 +139,46 @@ export default {
 
 <style scoped lang="scss">
 .page {
-  .level-block {
-    margin-left: 40px;
-  }
+  .nav-bar {
+    margin-bottom: 50px;
 
-  .coin-box {
-    margin-left: 40px;
-
-    .tickets {
-      color: #fc0;
+    .level-block {
+      margin-left: 40px;
     }
 
-    .renown {
-      color: #fff;
+    .coin-box {
+      margin-left: 40px;
+
+      .tickets {
+        color: #fc0;
+      }
+
+      .renown {
+        color: #fff;
+      }
+    }
+
+    .setting-box {
+      margin-left: 40px;
+
+      .setting-content {
+        padding: 5px;
+        width: 35px;
+        height: 35px;
+        line-height: 30px;
+        background-color: rgba(0, 0, 0, 0.5);
+        transform: scaleX(-1);
+        color: #fff;
+      }
     }
   }
 
-  .setting-box {
-    margin-left: 40px;
+  .action-bar {
+    display: flex;
 
-    .setting-content {
-      padding: 5px;
-      width: 35px;
-      height: 35px;
-      line-height: 30px;
-      background-color: rgba(0, 0, 0, 0.5);
-      transform: scaleX(-1);
-      color: #fff;
+    .classic-actions {
+    }
+    .event-actions {
     }
   }
 }
