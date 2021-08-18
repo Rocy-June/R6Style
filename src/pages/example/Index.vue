@@ -64,45 +64,53 @@
         </lighting-box>
       </div>
     </nav-bar>
-    <div class="action-bar">
-      <div class="classic-actions">
-        <div class="action-line">
-          <div class="action-box">
-            <lighting-box></lighting-box>
+    <div class="page-content">
+      <div class="action-bar">
+        <div class="classic-actions">
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box>
+                <slide-menu-button>
+                  <div class="medium-block menu-block">
+                    <icon-font type="icon-menu"></icon-font>
+                  </div>
+                </slide-menu-button>
+              </lighting-box>
+            </div>
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
           </div>
-          <div class="action-box">
-            <lighting-box></lighting-box>
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
+          </div>
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
+          </div>
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
+          </div>
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box></lighting-box>
+            </div>
           </div>
         </div>
-        <div class="action-line">
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
+        <div class="event-actions">
+          <lighting-box></lighting-box>
         </div>
-        <div class="action-line">
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
-        </div>
-        <div class="action-line">
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
-        </div>
-        <div class="action-line">
-          <div class="action-box">
-            <lighting-box></lighting-box>
-          </div>
-        </div>
-      </div>
-      <div class="event-actions">
-        <lighting-box></lighting-box>
       </div>
     </div>
   </div>
@@ -113,9 +121,10 @@ import NavBar from "@/components/NavBar/NavBar";
 import UserBar from "@/components/UserBar/UserBar";
 import LightingBox from "@/components/LightingBox/LightingBox";
 import LevelBlock from "@/components/LevelBlock/LevelBlock";
+import SlideMenuButton from "@/components/SlideMenuButton/SlideMenuButton";
 
 export default {
-  components: { NavBar, UserBar, LightingBox, LevelBlock },
+  components: { NavBar, UserBar, LightingBox, LevelBlock, SlideMenuButton },
   data() {
     return {
       navList: [
@@ -139,6 +148,8 @@ export default {
 
 <style scoped lang="scss">
 .page {
+  color: #fff;
+
   .nav-bar {
     margin-bottom: 50px;
 
@@ -154,7 +165,7 @@ export default {
       }
 
       .renown {
-        color: #fff;
+        // color: #fff;
       }
     }
 
@@ -168,7 +179,6 @@ export default {
         line-height: 30px;
         background-color: rgba(0, 0, 0, 0.5);
         transform: scaleX(-1);
-        color: #fff;
       }
     }
   }
@@ -176,9 +186,18 @@ export default {
   .action-bar {
     display: flex;
 
-    .classic-actions {
-    }
+    .classic-actions,
     .event-actions {
+      width: 530px;
+
+      .medium-block {
+        height: 95px;
+      }
+    }
+
+    .menu-block {
+      /* 95x125 */
+      width: 125px;
     }
   }
 }

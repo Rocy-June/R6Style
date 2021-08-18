@@ -11,7 +11,8 @@ export default {
 </script>
 
 <style>
-@import url(@/assets/scss/r6-font.scss);
+@import url(/assets/scss/global.scss);
+@import url(/assets/scss/r6-font.scss);
 
 body {
   margin: 0;
