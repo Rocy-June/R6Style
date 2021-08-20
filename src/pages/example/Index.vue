@@ -54,7 +54,9 @@
 
       <div class="setting-box">
         <!-- [lighting-box] is a module when mouse is hovering on, it will have a highlight animation. -->
-        <lighting-box>
+        <!-- 'type' is where will show from for the halo, default is 'out' -->
+        <!-- 'border-color' is the color of border in normal state, default is '#666' -->
+        <lighting-box type="in" border-color="#666">
           <div class="setting-content">
             <!-- [icon-font] is a module that can be easily to use icons, more on https://iconfont.cn/ -->
             <!-- 'type' is what this icon will show -->
@@ -69,47 +71,57 @@
         <div class="classic-actions">
           <div class="action-line">
             <div class="action-box">
-              <lighting-box>
-                <slide-menu-button>
-                  <div class="medium-block menu-block">
-                    <icon-font type="icon-menu"></icon-font>
-                  </div>
-                </slide-menu-button>
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="medium-block menu-block">
+                  <icon-font type="icon-menu" :size="48"></icon-font>
+                  <span class="menu-text">MATCH</span>
+                </div>
               </lighting-box>
             </div>
-            <div class="action-box">
-              <lighting-box></lighting-box>
+          </div>
+          <div class="action-line">
+            <div class="action-box half-box">
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="medium-block half-block">Test</div>
+              </lighting-box>
+            </div>
+            <div class="action-box half-box">
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="medium-block half-block">Test</div>
+              </lighting-box>
+            </div>
+          </div>
+          <div class="action-line">
+            <div class="action-box half-box">
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="medium-block half-block">Test</div>
+              </lighting-box>
+            </div>
+            <div class="action-box half-box">
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="medium-block half-block">Test</div>
+              </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box">
-              <lighting-box></lighting-box>
-            </div>
-            <div class="action-box">
-              <lighting-box></lighting-box>
-            </div>
-          </div>
-          <div class="action-line">
-            <div class="action-box">
-              <lighting-box></lighting-box>
-            </div>
-            <div class="action-box">
-              <lighting-box></lighting-box>
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="huge-block full-block">Test</div>
+              </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box">
-              <lighting-box></lighting-box>
-            </div>
-          </div>
-          <div class="action-line">
-            <div class="action-box">
-              <lighting-box></lighting-box>
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <div class="small-block full-block">Test</div>
+              </lighting-box>
             </div>
           </div>
         </div>
         <div class="event-actions">
-          <lighting-box></lighting-box>
+          <lighting-box border-color="rgba(50,58,67,0.5)">
+            <div class="event-block full-block">Test</div>
+          </lighting-box>
         </div>
       </div>
     </div>
@@ -121,10 +133,9 @@ import NavBar from "@/components/NavBar/NavBar";
 import UserBar from "@/components/UserBar/UserBar";
 import LightingBox from "@/components/LightingBox/LightingBox";
 import LevelBlock from "@/components/LevelBlock/LevelBlock";
-import SlideMenuButton from "@/components/SlideMenuButton/SlideMenuButton";
 
 export default {
-  components: { NavBar, UserBar, LightingBox, LevelBlock, SlideMenuButton },
+  components: { NavBar, UserBar, LightingBox, LevelBlock },
   data() {
     return {
       navList: [
@@ -149,9 +160,10 @@ export default {
 <style scoped lang="scss">
 .page {
   color: #fff;
+  user-select: none;
 
   .nav-bar {
-    margin-bottom: 50px;
+    margin-bottom: 80px;
 
     .level-block {
       margin-left: 40px;
@@ -159,13 +171,10 @@ export default {
 
     .coin-box {
       margin-left: 40px;
+      font-size: 18px;
 
       .tickets {
         color: #fc0;
-      }
-
-      .renown {
-        // color: #fff;
       }
     }
 
@@ -188,16 +197,68 @@ export default {
 
     .classic-actions,
     .event-actions {
-      width: 530px;
+      width: 525px;
+      font-size: 0;
+    }
 
-      .medium-block {
-        height: 95px;
+    .classic-actions {
+      margin-right: 15px;
+    }
+
+    .action-line {
+      display: flex;
+      margin-bottom: 15px;
+
+      .action-box.half-box:not(:last-child) {
+        margin-right: 15px;
       }
     }
 
+    .small-block,
+    .medium-block,
+    .huge-block,
+    .event-block {
+      font-size: 24px;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .small-block {
+      height: 60px;
+    }
+
+    .medium-block {
+      height: 105px;
+    }
+
+    .huge-block {
+      height: 265px;
+    }
+
     .menu-block {
-      /* 95x125 */
-      width: 125px;
+      display: flex;
+      justify-content: center;
+      width: 525px;
+      line-height: 105px;
+      font-size: 64px;
+      text-align: center;
+      background-color: #54b6f0;
+
+      .menu-text {
+        line-height: 98px;
+        margin-left: 10px;
+      }
+    }
+
+    .event-block {
+      height: 700px;
+    }
+
+    .half-block {
+      width: 255px;
+    }
+
+    .full-block {
+      width: 525px;
     }
   }
 }
