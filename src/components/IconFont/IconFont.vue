@@ -23,4 +23,8 @@ export default {
 
 <style lang="scss">
 @import url(https://at.alicdn.com/t/font_2748460_uoyg3bida5p.css);
+
+.iconfont {
+  vertical-align: middle;
+}
 </style>

@@ -57,10 +57,10 @@ export default {
 
 <style lang="scss" scoped>
 .module.nav-bar {
-  padding-top: 5px;
+  padding: 75px 0 50px;
 
   &.nav-bg {
-    background-color: rgba(0, 0, 0, 0.75);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
   }
 
   .nav-box {
@@ -71,44 +71,42 @@ export default {
     .nav-content {
       display: flex;
 
-      .nav-tab {
-        align-self: flex-end;
+      .tab-content {
+        position: relative;
+        display: block;
+        margin: 0 0.25em;
+        padding: 0em 0.5em;
+        font-size: 32px;
+        line-height: 1.5em;
+        color: rgba(255, 255, 255, 0.5);
+        background-image: radial-gradient(
+          #fff 0,
+          rgba(255, 255, 255, 0.5) 25%,
+          rgba(255, 255, 255, 0) 70%
+        );
+        background-size: 60px 2em;
+        background-position: 50% 1.5em;
+        background-repeat: no-repeat;
+        transition: color 0.2s, background 0.2s;
+        text-decoration: none;
+        cursor: pointer;
+        user-select: none;
 
-        .tab-content {
-          position: relative;
-          display: block;
-          padding: 0em 1em;
-          font-size: 32px;
-          line-height: 1.5em;
-          color: rgba(255, 255, 255, 0.5);
-          background-image: linear-gradient(
-            0deg,
-            rgba(80, 238, 231, 0.75),
-            rgba(80, 238, 231, 0)
-          );
-          border-bottom: 5px solid rgba(80, 238, 231, 0);
-          background-size: 100% calc(0.75em  + 10px);
-          background-position: 50% calc(1.5em + 10px);
-          background-repeat: no-repeat;
-          transition: color 0.2s, background 0.2s;
-          text-decoration: none;
-          cursor: pointer;
-          user-select: none;
-
-          &.active {
-            font-size: 38px;
-            color: #fff;
-            border-bottom: 5px solid #50eee7;
-
-            &:hover {
-              color: #fff;
-            }
-          }
+        &.active {
+          color: #fff;
+          border-bottom: 3px solid #fff;
 
           &:hover {
-            color: rgba(255, 255, 255, 0.8);
-            background-position: 50% 0.75em;
+            color: #fff;
+            border-bottom: 3px solid #fff;
           }
+        }
+
+        &:hover {
+          color: rgba(255, 255, 255, 0.8);
+          border-bottom: 3px solid rgba(255, 255, 255, 0.75);
+          background-size: 75px 2.5em;
+          background-position: 50% 0.5em;
         }
       }
     }
