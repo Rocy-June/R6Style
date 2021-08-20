@@ -49,9 +49,9 @@ export default {
     width: 100%;
     height: 100%;
     background-image: url(~@/assets/img/level-background.png);
-    background-size: 65px;
+    background-size: 60px 60px;
     background-repeat: no-repeat;
-    background-position: 50%;
+    background-position: center;
     font-size: 20px;
     line-height: 65px;
     color: #fff;
@@ -59,7 +59,7 @@ export default {
 
     &.has-progress {
       height: 60px;
-      background-size: 60px;
+      background-size: 55px;
       line-height: 60px;
     }
   }
