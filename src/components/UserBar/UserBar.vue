@@ -1,5 +1,5 @@
 <template>
-  <lighting-box class="module user-bar">
+  <lighting-box class="module user-bar" type="in">
     <div class="user-bar-content">
       <div
         class="user-icon-box user-none"
@@ -100,12 +100,12 @@ export default {
         font-size: 20px;
         line-height: 41px;
         text-align: center;
-        border: 2px dashed #ccc;
-        color: #ccc;
+        border: 2px dashed #666;
+        color: #666;
       }
 
       &.user-self {
-        border-left: 1px solid #ccc;
+        border-left: 1px solid #666;
         padding-left: 10px;
       }
     }
