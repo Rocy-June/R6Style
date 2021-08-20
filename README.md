@@ -5,8 +5,20 @@
 ## Build Setup
 
 ``` bash
+# switch to taobao mirror library
+npm config set registry https://registry.npm.taobao.org
+
 # install dependencies
 npm install
+
+# if it doesn't work install cnpm
+npm install cnpm -g
+
+# set policy
+set-ExecutionPolicy RemoteSigned
+
+# then use cnpm to install
+cnpm install
 
 # serve with hot reload at localhost:8080
 npm run dev

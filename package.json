@@ -2,7 +2,7 @@
   "name": "r6style",
   "version": "1.0.0",
   "description": "Vue modules that looks like \"Rainbow Six:Siege\" style.",
-  "author": "钲皓 黄 <a1048654629@hotmail.com>",
+  "author": "Rocy <a1048654629@hotmail.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
