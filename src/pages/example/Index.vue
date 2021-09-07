@@ -70,12 +70,32 @@
       <div class="action-bar">
         <div class="classic-actions">
           <div class="action-line">
-            <div class="action-box">
+            <div
+              :class="{
+                'action-box': true,
+                'half-box': lastSelect != null,
+                'menu-box': lastSelect != null,
+              }"
+            >
               <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="medium-block menu-block">
-                  <icon-font type="icon-menu" :size="48"></icon-font>
-                  <span class="menu-text">MATCH</span>
-                </div>
+                <slide-menu-button>
+                  <div class="menu-block">
+                    <icon-font type="icon-menu" :size="48"></icon-font>
+                    <span class="menu-text" v-if="lastSelect == null"
+                      >MATCH</span
+                    >
+                  </div>
+                </slide-menu-button>
+              </lighting-box>
+            </div>
+            <div class="action-box match-box" v-if="lastSelect != null">
+              <lighting-box border-color="rgba(50,58,67,0.5)">
+                <slide-menu-button>
+                  <div class="match-block">
+                    <div class="title-line">{{ lastSelect.title }}</div>
+                    <div class="content-line">{{ lastSelect.content }}</div>
+                  </div>
+                </slide-menu-button>
               </lighting-box>
             </div>
           </div>
@@ -133,9 +153,10 @@ import NavBar from "@/components/NavBar/NavBar";
 import UserBar from "@/components/UserBar/UserBar";
 import LightingBox from "@/components/LightingBox/LightingBox";
 import LevelBlock from "@/components/LevelBlock/LevelBlock";
+import SlideMenuButton from "@/components/SlideMenuButton/SlideMenuButton";
 
 export default {
-  components: { NavBar, UserBar, LightingBox, LevelBlock },
+  components: { NavBar, UserBar, LightingBox, LevelBlock, SlideMenuButton },
   data() {
     return {
       navList: [
@@ -152,6 +173,11 @@ export default {
         exp: 14875,
       },
       userList: [{ name: "Test_User", img: "", rank: 0, level: 0 }],
+      lastSelect: {
+        title: "CUSTOM MATCH",
+        content: "START CUSTOM MATCH",
+        method: () => {},
+      },
     };
   },
 };
@@ -226,12 +252,20 @@ export default {
       height: 60px;
     }
 
-    .medium-block {
+    .medium-block,
+    .menu-block,
+    .match-block {
       height: 105px;
     }
 
     .huge-block {
       height: 265px;
+    }
+
+    .menu-box {
+      .menu-block {
+        width: 125px;
+      }
     }
 
     .menu-block {
@@ -241,11 +275,29 @@ export default {
       line-height: 105px;
       font-size: 64px;
       text-align: center;
-      background-color: #54b6f0;
 
       .menu-text {
         line-height: 98px;
         margin-left: 10px;
+      }
+    }
+
+    .match-block {
+      width: 385px;
+      text-align: center;
+
+      .title-line,
+      .content-line {
+        line-height: 1em;
+      }
+
+      .title-line {
+        font-size: 48px;
+        padding: 10px 0 5px;
+      }
+
+      .content-line {
+        font-size: 32px;
       }
     }
 
