@@ -67,10 +67,14 @@
         </lighting-box>
       </div>
     </nav-bar>
+    <information-bar :show="informationData.show" :type="informationData.type">
+      <icon-font type="icon-arrow-right" :size="20"></icon-font>
+      {{ informationData.content }}
+    </information-bar>
     <div class="page-content">
       <div class="action-bar">
         <div class="classic-actions">
-          <div class="action-line">
+          <div class="action-line" v-if="!informationData.show">
             <div
               :class="{
                 'action-box': true,
@@ -78,11 +82,15 @@
                 'menu-box': lastSelect != null,
               }"
             >
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <!-- [slide-menu-button] is a module when mouse is hovering on, it will have a slide animation. -->
                 <!-- 'name' is the conflict name, the same name will conflict with each other. When name is '', it will rollback at mouse nolonger hovering on it -->
-                <slide-menu-button name="">
-                  <div class="menu-block">
+                <!-- 'type' is the theme of this module, default is 'menu' -->
+                <slide-menu-button name="" type="menu">
+                  <div class="menu-block" @click="StartCustomMatch()">
                     <icon-font type="icon-menu" :size="48"></icon-font>
                     <span class="menu-text" v-if="lastSelect == null"
                       >MATCH</span
@@ -92,8 +100,11 @@
               </lighting-box>
             </div>
             <div class="action-box match-box" v-if="lastSelect != null">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
-                <div class="match-block">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
+                <div class="match-block" @click="StartCustomMatch()">
                   <div
                     :class="{
                       'title-line': true,
@@ -109,33 +120,81 @@
               </lighting-box>
             </div>
           </div>
+          <div class="action-line" v-else>
+            <div
+              :class="{
+                'action-box': true,
+                'half-box': lastSelect != null,
+                'menu-box': lastSelect != null,
+              }"
+            >
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
+                <slide-menu-button name="" type="ready">
+                  <div class="menu-block" @click="ExitMatch()">
+                    <icon-font type="icon-exit" :size="48"></icon-font>
+                  </div>
+                </slide-menu-button>
+              </lighting-box>
+            </div>
+            <div class="action-box match-box" v-if="lastSelect != null">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
+                <div class="match-block matching" @click="MatchStart()">
+                  <div class="title-line">MATCHING</div>
+                  <div class="content-line">
+                    {{ lastSelect.content }}
+                  </div>
+                </div>
+              </lighting-box>
+            </div>
+          </div>
           <div class="action-line">
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <div class="medium-block half-block">Alpha Pack Block</div>
               </lighting-box>
             </div>
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <div class="medium-block half-block">Always Zero Block</div>
               </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <div class="medium-block half-block">Challenge Block</div>
               </lighting-box>
             </div>
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <div class="medium-block half-block">BUGSOFT CONNECT</div>
               </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+              <lighting-box
+                border-color="rgba(50,58,67,0.5)"
+                :high-light="true"
+              >
                 <div class="huge-block full-block">Information Block</div>
               </lighting-box>
             </div>
@@ -164,9 +223,17 @@ import UserBar from "@/components/UserBar/UserBar";
 import LightingBox from "@/components/LightingBox/LightingBox";
 import LevelBlock from "@/components/LevelBlock/LevelBlock";
 import SlideMenuButton from "@/components/SlideMenuButton/SlideMenuButton";
+import InformationBar from "@/components/InformationBar/InformationBar";
 
 export default {
-  components: { NavBar, UserBar, LightingBox, LevelBlock, SlideMenuButton },
+  components: {
+    NavBar,
+    UserBar,
+    LightingBox,
+    LevelBlock,
+    SlideMenuButton,
+    InformationBar,
+  },
   data() {
     return {
       navList: [
@@ -183,12 +250,61 @@ export default {
         exp: 14875,
       },
       userList: [{ name: "Test_User", img: "", rank: 0, level: 0 }],
+      informationData: {
+        show: false,
+        type: "info",
+        content: "",
+      },
       lastSelect: {
         title: "CUSTOM MATCH",
         content: "",
         method: () => {},
       },
+      matchInterval: null,
     };
+  },
+  methods: {
+    StartCustomMatch() {
+      var time = 1800;
+      this.matchInterval = setInterval(() => {
+        --time;
+        setInfo();
+      }, 1000);
+
+      var text = "CREATEING A CUSTOM MATCH... ";
+
+      var setInfo = () => {
+        this.informationData = {
+          show: true,
+          type: "info",
+          content:
+            text + parseInt(time / 60) + ":" + ("0" + (time % 60)).substr(-2),
+        };
+      };
+
+      setInfo();
+    },
+    ExitMatch() {
+      this.informationData.show = false;
+      clearInterval(this.matchInterval);
+    },
+    MatchStart() {
+      clearInterval(this.matchInterval);
+      
+      this.informationData = {
+        show: true,
+        type: "success",
+        content: "MATCH START",
+      };
+
+      setTimeout(() => {
+        this.informationData = {
+          show: false,
+          type: "info",
+          content: "",
+        };
+      }, 5000);
+    },
   },
 };
 </script>
@@ -199,8 +315,6 @@ export default {
   user-select: none;
 
   .nav-bar {
-    margin-bottom: 80px;
-
     .level-block {
       margin-left: 40px;
     }
@@ -228,104 +342,112 @@ export default {
     }
   }
 
-  .action-bar {
-    display: flex;
+  .page-content {
+    margin-top: calc(100vh - 870px);
 
-    .classic-actions,
-    .event-actions {
-      width: 525px;
-      font-size: 0;
-    }
-
-    .classic-actions {
-      margin-right: 15px;
-    }
-
-    .action-line {
+    .action-bar {
       display: flex;
-      margin-bottom: 15px;
 
-      .action-box.half-box:not(:last-child) {
+      .classic-actions,
+      .event-actions {
+        width: 525px;
+        font-size: 0;
+      }
+
+      .classic-actions {
         margin-right: 15px;
       }
-    }
 
-    .small-block,
-    .medium-block,
-    .huge-block,
-    .event-block {
-      font-size: 24px;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+      .action-line {
+        display: flex;
+        margin-bottom: 15px;
 
-    .small-block {
-      height: 60px;
-    }
-
-    .medium-block,
-    .menu-block,
-    .match-block {
-      height: 105px;
-    }
-
-    .huge-block {
-      height: 265px;
-    }
-
-    .menu-box {
-      .menu-block {
-        width: 125px;
-      }
-    }
-
-    .menu-block {
-      display: flex;
-      justify-content: center;
-      width: 525px;
-      line-height: 105px;
-      font-size: 64px;
-      text-align: center;
-
-      .menu-text {
-        line-height: 98px;
-        margin-left: 10px;
-      }
-    }
-
-    .match-block {
-      width: 385px;
-      text-align: center;
-      background-color: #5cbdea;
-
-      .title-line,
-      .content-line {
-        line-height: 1em;
-      }
-
-      .title-line {
-        font-size: 48px;
-        padding: 10px 0 5px;
-
-        &.full-line {
-          line-height: 1.75em;
+        .action-box.half-box:not(:last-child) {
+          margin-right: 15px;
         }
       }
 
-      .content-line {
-        font-size: 32px;
+      .small-block,
+      .medium-block,
+      .huge-block,
+      .event-block {
+        font-size: 24px;
+        background-color: rgba(0, 0, 0, 0.5);
       }
-    }
 
-    .event-block {
-      height: 700px;
-    }
+      .small-block {
+        height: 60px;
+      }
 
-    .half-block {
-      width: 255px;
-    }
+      .medium-block,
+      .menu-block,
+      .match-block {
+        height: 105px;
+      }
 
-    .full-block {
-      width: 525px;
+      .huge-block {
+        height: 265px;
+      }
+
+      .menu-box {
+        .menu-block {
+          width: 125px;
+        }
+      }
+
+      .menu-block {
+        display: flex;
+        justify-content: center;
+        width: 525px;
+        line-height: 105px;
+        font-size: 64px;
+        text-align: center;
+
+        .menu-text {
+          line-height: 98px;
+          margin-left: 10px;
+        }
+      }
+
+      .match-block {
+        width: 385px;
+        text-align: center;
+        background-color: #5cbdea;
+
+        &.matching {
+          background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .title-line,
+        .content-line {
+          line-height: 1em;
+        }
+
+        .title-line {
+          font-size: 48px;
+          padding: 10px 0 5px;
+
+          &.full-line {
+            line-height: 1.75em;
+          }
+        }
+
+        .content-line {
+          font-size: 32px;
+        }
+      }
+
+      .event-block {
+        height: 700px;
+      }
+
+      .half-block {
+        width: 255px;
+      }
+
+      .full-block {
+        width: 525px;
+      }
     }
   }
 }

@@ -22,7 +22,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import url(https://at.alicdn.com/t/font_2748460_uoyg3bida5p.css);
+@import url(https://at.alicdn.com/t/font_2748460_3u7dpt029fa.css);
 
 .iconfont {
   vertical-align: middle;
