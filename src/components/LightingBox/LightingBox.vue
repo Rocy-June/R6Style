@@ -1,7 +1,19 @@
 <template>
-  <div :class="{ module: true, 'lighting-box': true, [type]: true }">
+  <div
+    :class="{
+      module: true,
+      'lighting-box': true,
+      [type]: true,
+      hover: hovering,
+      'high-light': highLight,
+    }"
+  >
     <div class="box" :style="{ 'border-color': borderColor }">
-      <div class="content">
+      <div
+        class="content"
+        @mouseenter="OnMouseEnter()"
+        @mouseleave="OnMouseLeave()"
+      >
         <slot></slot>
       </div>
     </div>
@@ -23,9 +35,23 @@ export default {
       type: String,
       default: "#666",
     },
+    highLight: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
-    return {};
+    return {
+      hovering: false,
+    };
+  },
+  methods: {
+    OnMouseEnter() {
+      this.hovering = true;
+    },
+    OnMouseLeave() {
+      this.hovering = false;
+    },
   },
 };
 </script>
@@ -34,13 +60,15 @@ export default {
 .module.lighting-box {
   display: inline-block;
   transition: all 0.2s;
+  overflow: hidden;
 
   &.out {
+    position: relative;
     border: 2px solid rgba(255, 255, 255, 0);
-    padding: 3px;
-    margin: -5px;
+    padding: 5px;
+    margin: -7px;
 
-    &:hover {
+    &.hover {
       padding: 0;
       margin: -2px;
     }
@@ -51,7 +79,7 @@ export default {
     margin: -2px;
   }
 
-  &:hover {
+  &.hover {
     border: 2px solid #fff;
 
     .box {
@@ -67,6 +95,32 @@ export default {
 
     .content {
       margin: -1px;
+    }
+  }
+
+  &.high-light {
+    &::after {
+      content: "";
+      position: absolute;
+      top: -50vw;
+      left: -200px;
+      width: 200px;
+      height: 100vw;
+      background-image: linear-gradient(
+        to right,
+        rgba(255, 255, 255, 0),
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0)
+      );
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      transform: rotate(20deg);
+      pointer-events: none;
+    }
+
+    &:hover::after {
+      transition: all .5s;
+      left: 150%;
     }
   }
 }
