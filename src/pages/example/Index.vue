@@ -56,7 +56,8 @@
         <!-- [lighting-box] is a module when mouse is hovering on, it will have a highlight animation. -->
         <!-- 'type' is where will show from for the halo, default is 'out' -->
         <!-- 'border-color' is the color of border in normal state, default is '#666' -->
-        <lighting-box type="in" border-color="#666">
+        <!-- 'high-light' decides will show a light on hovering, default is false -->
+        <lighting-box type="in" border-color="#666" :high-light="false">
           <div class="setting-content">
             <!-- [icon-font] is a module that can be easily to use icons, more on https://iconfont.cn/ -->
             <!-- 'type' is what this icon will show -->
@@ -77,8 +78,10 @@
                 'menu-box': lastSelect != null,
               }"
             >
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <slide-menu-button>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <!-- [slide-menu-button] is a module when mouse is hovering on, it will have a slide animation. -->
+                <!-- 'name' is the conflict name, the same name will conflict with each other. When name is '', it will rollback at mouse nolonger hovering on it -->
+                <slide-menu-button name="">
                   <div class="menu-block">
                     <icon-font type="icon-menu" :size="48"></icon-font>
                     <span class="menu-text" v-if="lastSelect == null"
@@ -89,58 +92,65 @@
               </lighting-box>
             </div>
             <div class="action-box match-box" v-if="lastSelect != null">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <slide-menu-button>
-                  <div class="match-block">
-                    <div class="title-line">{{ lastSelect.title }}</div>
-                    <div class="content-line">{{ lastSelect.content }}</div>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="match-block">
+                  <div
+                    :class="{
+                      'title-line': true,
+                      'full-line': !lastSelect.content,
+                    }"
+                  >
+                    {{ lastSelect.title }}
                   </div>
-                </slide-menu-button>
+                  <div class="content-line" v-if="lastSelect.content">
+                    {{ lastSelect.content }}
+                  </div>
+                </div>
               </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="medium-block half-block">Test</div>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="medium-block half-block">Alpha Pack Block</div>
               </lighting-box>
             </div>
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="medium-block half-block">Test</div>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="medium-block half-block">Always Zero Block</div>
               </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="medium-block half-block">Test</div>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="medium-block half-block">Challenge Block</div>
               </lighting-box>
             </div>
             <div class="action-box half-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="medium-block half-block">Test</div>
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="medium-block half-block">BUGSOFT CONNECT</div>
+              </lighting-box>
+            </div>
+          </div>
+          <div class="action-line">
+            <div class="action-box">
+              <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+                <div class="huge-block full-block">Information Block</div>
               </lighting-box>
             </div>
           </div>
           <div class="action-line">
             <div class="action-box">
               <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="huge-block full-block">Test</div>
-              </lighting-box>
-            </div>
-          </div>
-          <div class="action-line">
-            <div class="action-box">
-              <lighting-box border-color="rgba(50,58,67,0.5)">
-                <div class="small-block full-block">Test</div>
+                <div class="small-block full-block">Notice Block</div>
               </lighting-box>
             </div>
           </div>
         </div>
         <div class="event-actions">
-          <lighting-box border-color="rgba(50,58,67,0.5)">
-            <div class="event-block full-block">Test</div>
+          <lighting-box border-color="rgba(50,58,67,0.5)" :high-light="true">
+            <div class="event-block full-block">Event Block</div>
           </lighting-box>
         </div>
       </div>
@@ -162,7 +172,7 @@ export default {
       navList: [
         { name: "HOME", url: "#" },
         { name: "OPERATORS", url: "#" },
-        { name: "MATCHES", url: "#" },
+        { name: "WATCH", url: "#" },
         { name: "SHOP", url: "#" },
       ],
       userData: {
@@ -175,7 +185,7 @@ export default {
       userList: [{ name: "Test_User", img: "", rank: 0, level: 0 }],
       lastSelect: {
         title: "CUSTOM MATCH",
-        content: "START CUSTOM MATCH",
+        content: "",
         method: () => {},
       },
     };
@@ -285,6 +295,7 @@ export default {
     .match-block {
       width: 385px;
       text-align: center;
+      background-color: #5cbdea;
 
       .title-line,
       .content-line {
@@ -294,6 +305,10 @@ export default {
       .title-line {
         font-size: 48px;
         padding: 10px 0 5px;
+
+        &.full-line {
+          line-height: 1.75em;
+        }
       }
 
       .content-line {
