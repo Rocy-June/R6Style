@@ -1,5 +1,5 @@
 <template>
-  <div class="module slide-menu-button" @mouseenter="OnMouseEnter()">
+  <div class="module slide-menu-button" @mouseenter="OnMouseEnter()" @mouseleave="OnMouseLeave()">
     <input
       class="state-saver"
       type="radio"
@@ -18,13 +18,18 @@ export default {
   props: {
     name: {
       type: String,
-      default: "slide-menu-button",
+      default: "",
     },
   },
   methods: {
     OnMouseEnter() {
       this.$refs.stateSaver.checked = true;
     },
+    OnMouseLeave(){
+      if(!this.name){
+        this.$refs.stateSaver.checked = false;
+      }
+    }
   },
 };
 </script>
@@ -40,7 +45,7 @@ export default {
     background-image: linear-gradient(#5cbdea);
     background-size: 10px 100%;
     background-repeat: no-repeat;
-    transition: all .2s;
+    transition: all .1s;
   }
 
   .state-saver:checked + .slide-menu-button-bg {
